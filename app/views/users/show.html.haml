@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @user.name
+%p
+  %b Email:
+  = @user.email
+%p
+  %b Position:
+  = @user.position != nil ? @user.position.name : ''
+
+%p
+  %b Has Bonus:
+  = @user.has_bonus ? 'Yes' : 'Nope'
+
+%p
+  %b Is Manager :
+  = @user.is_manager ? 'Yes' : 'Nope'
+
+%p
+  %b Is Employed :
+  = @user.is_employed ? 'Yes' : 'Not anymore'
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path

@@ -1,0 +1,11 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @service_type.name
+%p
+  %b Key Name:
+  = @service_type.key_name
+= link_to 'Edit', edit_service_type_path(@service_type)
+\|
+= link_to 'Back', service_types_path

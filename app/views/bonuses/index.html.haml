@@ -1,0 +1,172 @@
+- if is_user_boss
+	
+	#dialog-message{:title => "Reporting Bonuses", :style => "display:none"}
+
+	%div{:style => 'float:left'}
+		%form.radio_filters
+			%div#user_list{:style => "float:left"}
+				- User.all.each do |user|
+					- if user.has_bonus
+						- name = user.name.split(' ')
+						= radio_button_tag 'by_consultant', user.id
+						= label_tag "by_consultant_#{user.id}", name[1]
+
+	%div#payment_cart
+	
+	/* %div{:style => 'float:right'} = check_box_tag 'send_at_once', false = label_tag "Aggregate payments into email" */
+	%br
+	%br
+- else
+	%h1=@bonus_owner
+
+#tabs
+
+:javascript
+
+	var history = [];
+	var hash = hashToJson();
+
+	function getBonuses(id) {
+		$.get("#{bonuses_path}/"+id, function(data){
+			if (data == 'invalid') {
+				getBonuses(1);
+				$("input[id=by_consultant_1").trigger('click');
+				return;
+			}
+			if ($('#tabs').html() != '') {
+				$('#tabs').tabs("destroy");
+			}
+			$('#tabs').html(data);
+			$('#tabs').tabs();
+			window.location.hash = "consultant=" + id;
+		});
+	}
+
+	function prepBonusPayment(bonus_id) {
+		history.push(bonus_id);
+		setBonusPaymentLink();
+	}
+
+	function undoBonusPayment(bonus_id) {
+		history.splice(history.indexOf(bonus_id), 1);
+		setBonusPaymentLink();
+	}
+
+	function setBonusPaymentLink(){
+		if ( history.length > 0) {
+			$('#payment_cart').show();
+			$('#payment_cart').html('<a href="#" id="pay_bonuses" >Send ' + history.length + ' bonus payment requests</a>');
+		} else {
+			$('#payment_cart').hide();
+		}
+	}
+
+	$(function() {
+		var is_boss = #{is_user_boss.to_s};
+		var is_admin = #{@current_user.is_admin.to_s};
+		$('#user_list').buttonset();
+
+		if (hash['consultant']) {
+			if (is_boss || hash['consultant'] == "#{@bonus_user.id}") {
+				getBonuses(hash['consultant']);
+				$("input[id=by_consultant_"+hash['consultant']+"]").trigger('click');
+			} else {
+				getBonuses("#{@bonus_user.id}");
+				$("input[id=by_consultant_#{@bonus_user.id}]").trigger('click');
+			}
+		} else {
+			getBonuses("#{@bonus_user.id}");
+			$("input[id=by_consultant_#{@bonus_user.id}]").trigger('click');
+		}
+		$('input[id*=by_consultant_]').live('click', function(){
+			getBonuses($(this).val());
+		});
+		
+		$("#pay_bonuses").live('click', function(){
+			var info = 'bonuses='+history.join(",");
+			$.ajax({
+					url: '/prep_bonus_payments',
+					data: info,
+					success: function(data) {
+						$("#dialog-message").show();
+						$("#dialog-message").html(data);
+						$( "#dialog-message" ).dialog({
+							modal: true,
+							width: 600,
+							buttons: {
+								Send: function() {
+									var formdata = $('#bonus_reporting_form').serialize();
+									var url = $('#bonus_reporting_form').attr('action');
+									$.post(url, formdata, function(data){
+										var bonus_ids = data.bonus_ids.split(',');
+										for (var b=0; b < bonus_ids.length; b++) {
+											$("img[bonus_id="+bonus_ids[b]+"]").replaceWith("<div>Paid</div>");
+											undoBonusPayment(bonus_ids[b])
+										}
+									});
+									$( this ).dialog( "close" );
+						 		}
+							}
+						});
+					}
+				}
+			);
+		});
+
+		$(".pay_bonus,.claim_bonus").live('click', function() {
+			data = {};
+			data['id'] = $(this).attr('bonus_id');
+			var r=confirm("Are you sure?");
+			
+			if (r == false) {
+				return;
+			}
+
+			$('img[id='+data['id']+']').trigger('click');
+			
+			if ($(this).attr('bool') == 'true') {
+				$(this).attr('bool', 'false');
+			} else {
+				$(this).attr('bool', 'true');
+			}
+
+			if ($(this).attr('bool') == true) {
+				$('[bonus_id='+data['id']+']').attr('action', 'no-edit');
+			} else {
+				$('[bonus_id='+data['id']+']').attr('action', 'edit');
+			}
+
+			var alt_img = $(this).attr('alt_img');
+			var src = $(this).attr('src');
+			$(this).attr('alt_img', src);
+			$(this).attr('src', alt_img);
+			var action = '';
+			if ($(this).attr('class').match(/pay/)) {
+				data['paid'] = $(this).attr('bool');
+				path = "#{pay_bonus_path :format => :json }"
+				action = 'pay'
+			} else if ($(this).attr('class').match(/claim/)) {
+				data['claimed'] = $(this).attr('bool');
+				path = "#{claim_bonus_path :format => :json }"
+				action = 'claim'
+			}
+
+			if (action == 'pay') {
+			
+				if (data['paid'] == 'true') {
+					if (jQuery.inArray(data['id'], history) == -1) {
+						prepBonusPayment(data['id']);
+					}
+				} else if (data['paid'] == 'false') {
+					undoBonusPayment(data['id']);
+				}
+				return false;
+
+			} else {
+
+				$.get(path, data);
+			}
+			
+		});
+
+	});

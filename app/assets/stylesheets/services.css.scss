@@ -1,0 +1,71 @@
+// Place all the styles related to the services controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.service_status_potential {
+  background: #fff !important;
+}
+
+.service_status_completed {
+	background: #DBDEFF !important;
+}
+
+.service_status_in_progress {
+  background: #FFDBEC !important;
+}
+
+.service_status_lost {
+  background: #ABABAB !important;
+}
+
+.service_status_won {
+  background: #7AFFA9 !important;
+}
+
+#services_list {
+  font-size: 10px !important;
+}
+
+
+#services_list  td {
+  font-size: 10px !important;
+}
+
+div.status_sample_colors {
+    font-size: 12px;
+}
+
+.sample_box {
+	border: 1px solid #e3e3e3 !important;
+	width:15px;
+	margin-left:13px;
+	margin-right:2px;
+}
+
+img.img_sample_box {
+	height: 11px;
+}
+
+#services_list_filter > input {
+  width:200px;
+}
+
+.ui-button-text {
+  height:20px;
+  font-size:10px;
+}
+
+#services_filter {
+  clear:both;
+}
+
+#services_filter > #user_list {
+  float:left;
+  width:55%;
+}
+
+#services_filter > #statuses_list {
+  float:right;
+  width:40%;
+  text-align: right;
+
+}

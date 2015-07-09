@@ -1,0 +1,110 @@
+[03:15:53]: destroyed object: {"budget":41760,"created_at":"2013-01-13T19:06:31Z","created_by":null,"description":null,"duration":0,"id":33,"project_id":18,"proposal_sent":true,"service_type_id":4,"sold_by":0,"spec_sent":true,"start_date":"2012-10-03","success_status":1,"updated_at":"2013-01-14T07:57:45Z","user_id":1}
+----------------------------------------
+
+[03:16:21]: Updating: Service from {"id_was":211,"service_type_id_was":1,"project_id_was":101,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2012-10-03","duration_was":2,"created_at_was":"2013-02-18T01:06:04Z","updated_at_was":"2013-02-18T01:06:04Z","user_id_was":7,"sold_by_was":0,"success_status_was":5,"budget_was":2500,"created_by_was":null}
+TO
+{"id":211,"service_type_id":1,"project_id":101,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2012-10-03","duration":2,"created_at":"2013-02-18T01:06:04Z","updated_at":"2013-02-20T01:16:21Z","user_id":7,"sold_by":0,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[03:16:39]: created a new object: {"budget":1111111111,"created_at":"2013-02-20T01:16:39Z","created_by":1,"description":null,"duration":null,"id":513,"project_id":5,"proposal_sent":null,"service_type_id":1,"sold_by":0,"spec_sent":null,"start_date":"2013-02-28","success_status":1,"updated_at":"2013-02-20T01:16:39Z","user_id":1}
+----------------------------------------
+
+[03:17:15]: created a new object: {"budget":13213123,"created_at":"2013-02-20T01:17:15Z","created_by":1,"description":null,"duration":null,"id":514,"project_id":2,"proposal_sent":null,"service_type_id":4,"sold_by":1,"spec_sent":null,"start_date":"2013-02-26","success_status":5,"updated_at":"2013-02-20T01:17:15Z","user_id":1}
+----------------------------------------
+
+[03:21:19]: Updating: Service from {"id_was":514,"service_type_id_was":4,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:17:15Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":13213123,"created_by_was":1}
+TO
+{"id":514,"service_type_id":1,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:21:19Z","user_id":1,"sold_by":1,"success_status":5,"budget":13213123,"created_by":1}
+----------------------------------------
+
+[03:22:32]: Updating: Service from {"id_was":514,"service_type_id_was":1,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:21:19Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":13213123,"created_by_was":1}
+TO
+{"id":514,"service_type_id":1,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:22:32Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[03:25:21]: Updating: Service from {"id_was":514,"service_type_id_was":1,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:22:32Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":2500,"created_by_was":1}
+TO
+{"id":514,"service_type_id":1,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:22:32Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[03:25:37]: Updating: Service from {"id_was":514,"service_type_id_was":1,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:22:32Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":2500,"created_by_was":1}
+TO
+{"id":514,"service_type_id":4,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:25:37Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[03:33:08]: Updating: Service from {"id_was":514,"service_type_id_was":4,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:25:37Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":2500,"created_by_was":1}
+TO
+{"id":514,"service_type_id":1,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:33:08Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[03:49:54]: Updating: Service from {"id_was":45,"service_type_id_was":1,"project_id_was":24,"description_was":null,"spec_sent_was":false,"proposal_sent_was":false,"start_date_was":"2012-11-13","duration_was":3,"created_at_was":"2013-02-05T11:04:21Z","updated_at_was":"2013-02-20T01:12:12Z","user_id_was":3,"sold_by_was":1,"success_status_was":5,"budget_was":2147483647,"created_by_was":1}
+TO
+{"id":45,"service_type_id":1,"project_id":24,"description":null,"spec_sent":false,"proposal_sent":false,"start_date":"2012-11-13","duration":3,"created_at":"2013-02-05T11:04:21Z","updated_at":"2013-02-20T01:12:12Z","user_id":3,"sold_by":1,"success_status":5,"budget":2147483647,"created_by":1}
+----------------------------------------
+
+[03:52:36]: destroyed object: {"budget":900,"created_at":"2013-02-05T12:20:46Z","created_by":1,"description":null,"duration":null,"id":49,"project_id":26,"proposal_sent":null,"service_type_id":2,"sold_by":1,"spec_sent":null,"start_date":"2013-01-14","success_status":1,"updated_at":"2013-02-19T21:22:27Z","user_id":6}
+----------------------------------------
+
+[03:52:39]: destroyed object: {"budget":69192,"created_at":"2013-02-05T12:21:31Z","created_by":null,"description":null,"duration":null,"id":50,"project_id":26,"proposal_sent":null,"service_type_id":4,"sold_by":1,"spec_sent":null,"start_date":"2013-01-04","success_status":5,"updated_at":"2013-02-19T15:20:23Z","user_id":1}
+----------------------------------------
+
+[04:17:45]: destroyed object: {"budget":2147483647,"created_at":"2013-02-05T12:07:39Z","created_by":1,"description":null,"duration":2,"id":46,"project_id":25,"proposal_sent":null,"service_type_id":4,"sold_by":2,"spec_sent":null,"start_date":"2014-05-09","success_status":2,"updated_at":"2013-02-19T23:36:31Z","user_id":4}
+----------------------------------------
+
+[04:18:03]: destroyed object: {"budget":1000,"created_at":"2013-02-18T00:31:57Z","created_by":null,"description":null,"duration":1,"id":61,"project_id":18,"proposal_sent":null,"service_type_id":1,"sold_by":1,"spec_sent":null,"start_date":"2012-11-15","success_status":5,"updated_at":"2013-02-18T00:31:57Z","user_id":1}
+----------------------------------------
+
+[04:19:33]: Updating: Service from {"id_was":53,"service_type_id_was":2,"project_id_was":28,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-27","duration_was":2,"created_at_was":"2013-02-05T12:26:46Z","updated_at_was":"2013-02-19T22:11:13Z","user_id_was":2,"sold_by_was":3,"success_status_was":3,"budget_was":512312413,"created_by_was":1}
+TO
+{"id":53,"service_type_id":2,"project_id":28,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-27","duration":2,"created_at":"2013-02-05T12:26:46Z","updated_at":"2013-02-20T02:19:33Z","user_id":2,"sold_by":3,"success_status":5,"budget":512312413,"created_by":1}
+----------------------------------------
+
+[04:19:49]: Updating: Service from {"id_was":161,"service_type_id_was":1,"project_id_was":28,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-11","duration_was":null,"created_at_was":"2013-02-18T00:54:28Z","updated_at_was":"2013-02-19T22:08:18Z","user_id_was":6,"sold_by_was":1,"success_status_was":6,"budget_was":1600,"created_by_was":1}
+TO
+{"id":161,"service_type_id":1,"project_id":28,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-11","duration":null,"created_at":"2013-02-18T00:54:28Z","updated_at":"2013-02-20T02:19:49Z","user_id":6,"sold_by":1,"success_status":5,"budget":1600,"created_by":1}
+----------------------------------------
+
+[04:20:07]: Updating: Service from {"id_was":53,"service_type_id_was":2,"project_id_was":28,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-27","duration_was":2,"created_at_was":"2013-02-05T12:26:46Z","updated_at_was":"2013-02-20T02:19:33Z","user_id_was":2,"sold_by_was":3,"success_status_was":5,"budget_was":512312413,"created_by_was":1}
+TO
+{"id":53,"service_type_id":1,"project_id":28,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-27","duration":2,"created_at":"2013-02-05T12:26:46Z","updated_at":"2013-02-20T02:20:07Z","user_id":1,"sold_by":3,"success_status":5,"budget":512312413,"created_by":1}
+----------------------------------------
+
+[04:21:25]: destroyed object: {"budget":512312413,"created_at":"2013-02-05T12:26:46Z","created_by":1,"description":null,"duration":2,"id":53,"project_id":28,"proposal_sent":null,"service_type_id":1,"sold_by":3,"spec_sent":null,"start_date":"2013-02-27","success_status":5,"updated_at":"2013-02-20T02:20:07Z","user_id":1}
+----------------------------------------
+
+[04:22:19]: destroyed object: {"budget":1600,"created_at":"2013-02-18T00:54:28Z","created_by":1,"description":null,"duration":null,"id":161,"project_id":28,"proposal_sent":null,"service_type_id":1,"sold_by":1,"spec_sent":null,"start_date":"2013-02-11","success_status":5,"updated_at":"2013-02-20T02:19:49Z","user_id":6}
+----------------------------------------
+
+[04:22:47]: Updating: Service from {"id_was":411,"service_type_id_was":1,"project_id_was":171,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-01-10","duration_was":2,"created_at_was":"2013-02-18T01:34:08Z","updated_at_was":"2013-02-19T21:56:23Z","user_id_was":2,"sold_by_was":3,"success_status_was":5,"budget_was":2500,"created_by_was":1}
+TO
+{"id":411,"service_type_id":1,"project_id":171,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-01-10","duration":2,"created_at":"2013-02-18T01:34:08Z","updated_at":"2013-02-20T02:22:47Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[04:23:03]: destroyed object: {"budget":2500,"created_at":"2013-02-18T01:34:08Z","created_by":1,"description":null,"duration":2,"id":411,"project_id":171,"proposal_sent":null,"service_type_id":1,"sold_by":1,"spec_sent":null,"start_date":"2013-01-10","success_status":5,"updated_at":"2013-02-20T02:22:47Z","user_id":1}
+----------------------------------------
+
+[04:23:25]: Updating: Service from {"id_was":513,"service_type_id_was":1,"project_id_was":5,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-28","duration_was":null,"created_at_was":"2013-02-20T01:16:39Z","updated_at_was":"2013-02-20T01:16:39Z","user_id_was":1,"sold_by_was":0,"success_status_was":1,"budget_was":1111111111,"created_by_was":1}
+TO
+{"id":513,"service_type_id":1,"project_id":5,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-27","duration":null,"created_at":"2013-02-20T01:16:39Z","updated_at":"2013-02-20T02:23:25Z","user_id":1,"sold_by":1,"success_status":5,"budget":1111111111,"created_by":1}
+----------------------------------------
+
+[04:23:34]: Updating: Service from {"id_was":513,"service_type_id_was":1,"project_id_was":5,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-27","duration_was":null,"created_at_was":"2013-02-20T01:16:39Z","updated_at_was":"2013-02-20T02:23:25Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":1111111111,"created_by_was":1}
+TO
+{"id":513,"service_type_id":1,"project_id":5,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-27","duration":null,"created_at":"2013-02-20T01:16:39Z","updated_at":"2013-02-20T02:23:34Z","user_id":2,"sold_by":1,"success_status":5,"budget":1111111111,"created_by":1}
+----------------------------------------
+
+[04:25:05]: Updating: Service from {"id_was":513,"service_type_id_was":1,"project_id_was":5,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-27","duration_was":null,"created_at_was":"2013-02-20T01:16:39Z","updated_at_was":"2013-02-20T02:23:34Z","user_id_was":2,"sold_by_was":1,"success_status_was":5,"budget_was":1111111111,"created_by_was":1}
+TO
+{"id":513,"service_type_id":1,"project_id":5,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-27","duration":null,"created_at":"2013-02-20T01:16:39Z","updated_at":"2013-02-20T02:25:05Z","user_id":2,"sold_by":2,"success_status":5,"budget":1111111111,"created_by":1}
+----------------------------------------
+
+[13:33:34]: Updating: Service from {"id_was":514,"service_type_id_was":1,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:33:08Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":2500,"created_by_was":1}
+TO
+{"id":514,"service_type_id":1,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:33:08Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+
+[13:37:20]: Updating: Service from {"id_was":514,"service_type_id_was":1,"project_id_was":2,"description_was":null,"spec_sent_was":null,"proposal_sent_was":null,"start_date_was":"2013-02-26","duration_was":null,"created_at_was":"2013-02-20T01:17:15Z","updated_at_was":"2013-02-20T01:33:08Z","user_id_was":1,"sold_by_was":1,"success_status_was":5,"budget_was":2500,"created_by_was":1}
+TO
+{"id":514,"service_type_id":1,"project_id":2,"description":null,"spec_sent":null,"proposal_sent":null,"start_date":"2013-02-26","duration":null,"created_at":"2013-02-20T01:17:15Z","updated_at":"2013-02-20T01:33:08Z","user_id":1,"sold_by":1,"success_status":5,"budget":2500,"created_by":1}
+----------------------------------------
+

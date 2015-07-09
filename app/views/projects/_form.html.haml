@@ -1,0 +1,64 @@
+%h2 Project
+= form_for @project, :html => {:id => 'project_form'} do |f|
+  - if @project.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+      %ul
+        - @project.errors.full_messages.each do |msg|
+          %li= msg
+  %table{:class => 'alternate'}
+    %tr.field
+      %td
+        = f.label :hub_id
+      %td
+        = f.number_field :hub_id, :size => 5
+    %tr.field
+      %td
+        = f.label :name
+      %td
+        = f.text_field :name, :required => true, :placeholder => 'Start typing for existing projects or add new', :class =>  @show_resetter ? 'allow_autocomplete' : '', :size => 50
+        - if @show_resetter
+          %div.or_new_project 
+            %a{:class => 'reset_form', :form_id => 'project_form'}
+              ="&times;".html_safe
+    %tr.field
+      %td
+        = f.label :client
+      %td
+        = f.text_field :client, :required => true
+    %tr.field
+      %td
+        = f.label :project_manager
+      %td
+        = f.text_field :project_manager, :required => true
+    %tr.field
+      %td
+        = f.label :sales_manager
+      %td
+        = f.text_field :sales_manager, :required => true
+    %tr.field
+      %td
+        = f.label :budget
+      %td
+        = f.text_field :budget 
+    %tr.field
+      %td
+        = f.label :engagement_type
+      %td
+        = f.select :engagement_type, Project.engagement_types.collect { |k, v| [ k.to_s.capitalize.tr!('_', ' '), v ] }      
+    %tr.field
+      %td
+        = f.label 'Status'
+      %td
+        - client_abc = Project.client_abc
+        - client_abc = {'' => 'Client Category'}.merge(client_abc)
+        = f.select :abc, client_abc.collect { |k, v| [ v, k ] }      
+        = f.select :converted, Project.conversion_status.collect { |k, v| [ v.to_s.capitalize , k ] }
+        = f.text_area :status_comment,
+                :rows => 2,
+                :cols => 40 ,
+                :autocomplete => :off        
+    %tr.actions
+      %td
+        = f.submit 'Save'
+      %td

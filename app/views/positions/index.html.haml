@@ -1,0 +1,21 @@
+%h1 Listing positions
+
+%table{:class => 'alternate'}
+  %tr
+    %th Name
+    %th Has bonus
+    %th
+    %th
+    %th
+
+  - @position.each do |position|
+    %tr
+      %td= position.name
+      %td= position.has_bonus
+      %td= link_to 'Show', position
+      %td= link_to 'Edit', edit_position_path(position)
+      %td= link_to 'Destroy', position, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Position', new_position_path, :class => 'fancybutton'

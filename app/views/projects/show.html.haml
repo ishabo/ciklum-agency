@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @project.name
+%p
+  %b Client:
+  = @project.client
+%p
+  %b Project manager:
+  = @project.project_manager
+%p
+  %b Hub:
+  = @project.hub_id
+%p
+  %b Sales manager:
+  = @project.sales_manager
+%p
+  %b Budget:
+  = @project.budget
+%p
+  %b Description:
+  = @project.description
+
+= link_to 'Edit', edit_project_path(@project)
+\|
+= link_to 'Back', projects_path

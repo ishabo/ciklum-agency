@@ -1,0 +1,21 @@
+%h1 Listing service_types
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+    %th
+
+  - @service_types.each do |service_type|
+    %tr
+      %td= service_type.name
+      %td= service_type.key_name
+      %td= link_to 'Show', service_type
+      %td= link_to 'Edit', edit_service_type_path(service_type)
+      %td= link_to 'Destroy', service_type, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Service type', new_service_type_path

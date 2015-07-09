@@ -1,0 +1,75 @@
+%h2 Service
+- users = User.all.collect { |u| [u.name, u.id] }
+= form_for @service, :html => {:id => 'service_form'} do |f|
+  - if @service.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@service.errors.count, "error")} prohibited this service from being saved:"
+      %ul
+        - @service.errors.full_messages.each do |msg|
+          %li= msg
+  %table{:class => 'alternate'}
+    %tr.field
+      %td
+        = f.label :service_type_id
+      %td  
+        = f.select :service_type_id, ServiceType.all.collect { |p| [p.name, p.id] }
+    %tr.field
+      %td
+        = f.label 'Consultant'
+      %td
+        - consultants =  users
+        - if @service.created_at == nil
+          - selected = @current_user.id
+        - else
+          - selected = @service.user_id
+        = f.select :user_id, consultants, :required => true, :selected => selected
+    %tr.field
+      %td
+        = f.label 'Sold By'
+      %td
+        - sold_by = ['Sales Manager'] + users
+        = f.select :sold_by, sold_by, :required => false        
+    //%tr.field
+    //  %td
+    //    = f.label :spec_sent
+    //  %td
+    //   = f.check_box :spec_sent
+    //%tr.field
+    //  %td
+    //    = f.label :proposal_sent
+    //  %td
+    //    = f.check_box :proposal_sent
+    %tr.field
+      %td
+        = f.label :start_date
+      %td
+        = f.text_field :start_date, :class => 'datepicker', :required => true
+    %tr.field
+      %td
+        = f.label :duration
+      %td
+        = f.number_field :duration
+    %tr.field
+      %td
+        = f.label :budget
+      %td
+        = f.text_field :budget    
+    %tr.field
+      %td
+        = f.label :success_status        
+      %td
+        = f.select :success_status, Service.statuses.collect { |k, v| [ v.to_s.capitalize, k ] }
+        = f.text_area :status_comment,
+                :rows => 2,
+                :cols => 40 ,
+                :autocomplete => :off
+    %tr.field
+      %td
+        = f.label :is_paid
+      %td
+        = f.check_box :is_paid
+    %tr.actions
+      %td
+      %td
+        = f.submit 'Save', :id => 'service_submit'
+        = f.hidden_field :project_id

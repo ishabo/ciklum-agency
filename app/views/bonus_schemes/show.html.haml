@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Reason:
+  = @bonus_scheme.reason
+%p
+  %b Value:
+  = @bonus_scheme.value
+
+= link_to 'Edit', edit_bonus_scheme_path(@bonus_scheme)
+\|
+= link_to 'Back', bonus_schemes_path

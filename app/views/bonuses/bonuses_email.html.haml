@@ -1,0 +1,39 @@
+= tinymce :theme => "modern", :language => "en" 
+%form{ :action => "/batch_pay_bonus", :method => "post", :id => "bonus_reporting_form"}
+	%input{:type => "hidden", :name => "bonus_ids", :value => @bonus_ids}
+	%table{:class => 'alternate'}
+		%tr
+			%td
+				%label{:for => "to"} Email:
+			%td
+				%input{:type => "text", :name => "to", :class => "text", :size => 50, :value => "#{@current_user.name} <#{@current_user.email}>" }
+		%tr
+			%td
+				%label{:for => "body"} Message:
+			%td
+				%textarea{:name => "body", :id => "editor", :cols => 60, :rows => 10, :class => "tinymce"}
+					- group = ''
+					- total = 0
+					- i = 0
+					- @bonuses.each do |bonus|
+						- total += bonus.value
+						- if group != bonus.user.name
+							- group = bonus.user.name
+							%u Bonuses for #{bonus.user.name}:
+						
+						%br
+						\- #{bonus.value} USD for project: #{bonus.project.client} - #{bonus.project.name}. Reason: #{bonus.bonus_scheme.reason}
+						- i += 1 #Increasing count to check if the bonus is last in group and print total
+						- if total > 0 and @bonuses[i] == nil or group != @bonuses[i].user.name
+							%br
+							%b
+								Total #{total} USD
+							%br
+							%br
+							%br
+							- total = 0					
+						
+					
+
+
+					

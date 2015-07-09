@@ -1,0 +1,389 @@
+#filters
+	= render 'filters'
+#dashboard-tabs
+	%ul
+		%li
+			%a{href: "#tabs-1"} Upcoming Workshops
+		%li
+			%a{href: "#tabs-2"} Upcomming UX
+		%li
+			%a{href: "#tabs-3"} Revenue
+	#tabs-1
+		.filters
+		%br
+
+		.charts
+			#ws_chart{:style => "width:100%; height: 250px; "}
+			#ws_table{:style => "width:100%; height: 300px; display: none; "}
+
+		%br 
+
+		.charts
+			#ws_rev_chart{:style => "width:100%; height: 250px; "}
+			#ws_rev_table{:style => "width:100%; height: 250px; display: none; "}
+
+	#tabs-2
+		.filters 
+		.charts
+			#ux_chart{:style => "width:100%; height: 250px; "}
+			#ux_table{:style => "width:100%; height: 300px;  display: none; "}
+
+		%br 
+		.charts
+			#ux_rev_chart{:style => "width:100%; height: 250px; "}
+			#ux_rev_table{:style => "width:100%; height: 250px;  display: none; "}
+
+	#tabs-3
+		.filters 
+		%br
+		.charts
+			#conversion_rev_chart{:style => "width:100%; height: 250px;"}
+			#conversion_rev_table{:style => "width:100%; height: 250px; display: none; "}
+
+		%br 
+
+		.charts
+			#vas_rev_chart{:style => "width:90%; height: 250px; "}
+			#vas_rev_table{:style => "width:90%; height: 250px;  display: none; "}
+
+
+:javascript
+	var fetch_won_vs_lost_vs_potential;
+	var fetch_revenue;
+	var filter_result = [];
+	var root_path = "#{root_path(:format => :json)}"
+	filter_result.year = new Date().getFullYear();
+	filter_result.consultant = 0;
+
+	function toggle_chart_vs_table (checked, chart, table, delay = 0) {
+		if (checked == true) {
+			if (delay > 0) {
+				$('#' + chart).hide('slide', {}, delay, function() { 
+				$('#' + table).show('slide', {}, delay);} );
+			} else {
+				$('#' + chart).hide();
+				$('#' + table).show();
+			}
+		} else {
+			if (delay > 0) {
+				$('#' + table).hide('slide', {}, delay, function() { 
+				$('#' + chart).show('slide', {}, delay);} );
+			} else {
+				$('#' + table).hide();
+				$('#' + chart).show();
+			}
+		}
+	}
+
+	do_table_chart_toggle = function(bool, delay) {
+		toggle_chart_vs_table(bool, 'ws_chart', 'ws_table', delay);
+		toggle_chart_vs_table(bool, 'ux_chart', 'ux_table', delay);
+		toggle_chart_vs_table(bool, 'conversion_rev_chart', 'conversion_rev_table', delay);
+		toggle_chart_vs_table(bool, 'vas_rev_chart', 'vas_rev_table', delay);
+		toggle_chart_vs_table(bool, 'ws_rev_chart', 'ws_rev_table', delay);
+		toggle_chart_vs_table(bool, 'ux_rev_chart', 'ux_rev_table', delay);
+	};
+
+	function createDataTable(service, data, title) {
+		var services_table = "<br /><br />"
+		+ "<div class='data_table_title'>" + title + "</div>"
+		+ "<table class='chart_data_table alternate'>";
+		
+		services_table += "<tr><td>Months</td>";
+		
+		for (var i=0; i < 12; i++) {
+			services_table += "<td>"+data.get_months[i]+"</td>";
+		}
+
+		services_table += '</tr>';
+		
+		var possible_objects = ['won', 'completed', 'lost', 'potential', 'booked'];
+		var obj = '';
+
+		for (var y=0; y < possible_objects.length; y++) {
+			obj = possible_objects[y]
+			if (typeof data[obj] == 'undefined') {
+				continue;
+			}
+
+			services_table += "<tr><td>" + obj + "</td>";
+			
+			for (var i=0; i < 12; i++) {
+				services_table += "<td>"+data[obj][i]+"</td>";
+			}
+
+			services_table += "</tr>"
+		}
+
+		services_table += "<tr><td><b>Total</b></td>";
+		
+		for (var i=0; i < 12; i++) {
+			var total = 0;
+			for (var y=0; y < possible_objects.length; y++) {
+				obj = possible_objects[y]
+				if (typeof data[obj] != 'undefined') {
+					total += parseInt(data[obj][i]);
+				}
+			}
+			services_table += "<td><b>"+total+"</b></td>";
+		}
+		services_table += "</tr></table><br /><br /><br />";
+
+		$('#' + service + '_table').html(services_table);
+
+	}
+
+	jQuery(function() {
+		
+		$('#toggle_chart_vs_table').attr('checked', false);
+		fetch = function() {
+			fetch_won_vs_lost_vs_potential('ws');
+			fetch_won_vs_lost_vs_potential('ux');
+			fetch_revenue('ws');
+			fetch_revenue('ux');
+			fetch_revenue('vas');
+			fetch_revenue('conversion');
+		}
+
+		var dataLablesOptions;
+
+		dataLablesOptions = {
+		  enabled: true,
+		  rotation: 0,
+		  color: "#FFFFFF",
+		  align: "right",
+		  x: -1,
+		  y: 15,
+		  width:10,
+		  formatter: function() {
+		    return this.y;
+		  },
+		  style: {
+		    fontSize: "8px",
+		    fontFamily: "Verdana, sans-serif"
+		  }, moredata: 'bla'
+		};
+
+		$('#toggle_chart_vs_table').live('click', function(){
+			do_table_chart_toggle($(this).is(':checked'), 500)
+		});
+
+		$("#year_" + new Date().getFullYear()).attr("checked","checked");
+		fetch_won_vs_lost_vs_potential = function(service, revenue){
+			$.get(root_path, {year: filter_result.year, service: service, consultant: filter_result.consultant }, function(data) {
+				var max_num = data.max
+				if (service == 'ws') {
+					uf_service = 'workshop|T&TR';
+				} else {
+					uf_service = service;
+				}
+				var series_data = [
+					{
+				    	name: "Completed :)",
+				        data: data.won,
+				       	dataLabels: dataLablesOptions,
+				       	pointWidth: 13,
+				       	color: '#2DC444', //green
+				       	composition: {
+					        'stat': 'completed',
+					        'service': uf_service,
+					    }
+				    }, {
+				    	name: "Lost :(",
+				        data: data.lost,
+				       	dataLabels: dataLablesOptions,
+				       	pointWidth: 13,
+				       	color: '#D65C5C', //red				        
+				       	composition: {
+					        'stat': 'lost',
+					        'service': uf_service,
+					    }
+				    }, {
+				    	name: "Potential :S",
+				        data: data.potential,
+				       	dataLabels: dataLablesOptions,
+				       	pointWidth: 13,
+				       	color: '#6278D1', //blue
+				       	composition: {
+					        'stat': 'potential',
+					        'service': uf_service,
+					    }
+				    }, {
+				    	name: "Booked + In progress!!!",
+				        data: data.booked,
+				       	dataLabels: dataLablesOptions,
+				       	pointWidth: 13,
+				       	color: '#AA4BC9', //purple
+				       	composition: {
+					        'stat': 'booked',
+					        'service': uf_service,
+					    }
+				    }
+				]
+				
+				var xtitle, ytitle;
+
+			    if (service == 'ws') {
+			    	ytitle = "Number of Workshops"
+			    	xtitle = "Workshops"
+	  			} else if (service == 'vas') {
+		  			ytitle = "Number of VAS"
+			    	xtitle = "Value Added Services"
+		  		} else if (service == 'ux') {
+		  			ytitle = "Number of UX"
+			    	xtitle = "UX-UI"
+		  		}
+		  		
+		  		won_vs_lost_vs_potential_charts (service + "_chart", xtitle, ytitle, data.get_months, series_data, max_num);
+
+		  		createDataTable(service, data, xtitle + " - " + ytitle );
+	  		});
+		};
+
+		fetch_revenue = function(service) {
+			$.get(root_path, {year: filter_result.year, service: service, consultant: filter_result.consultant, revenue: 1}, function(data) {
+				  	var series_data = [
+					  {
+					    name: "Potential",
+					    data: data.potential,
+					  }, {
+					    name: "Lost potential",
+					    data: data.lost
+					  }, {
+					    name: "Converted :)",
+					    data: data.completed
+					  }
+					]
+
+			    if (service == 'ws') {
+			    	ytitle = ""
+			    	xtitle = "Workshop Revenue"
+	  			} else if (service == 'vas') {
+			    	ytitle = ""
+			    	xtitle = "VAS Revenue"		  			
+		  		} else if (service == 'ux') {
+			    	ytitle = ""
+			    	xtitle = "UX Revenue"
+		  		} else if (service == 'conversion') {
+			    	ytitle = "Revenue"
+			    	xtitle = "Project Converted Revenue"
+		  		}
+
+		  		revenue_chart(service + "_rev_chart", xtitle, ytitle, data.get_months, series_data);
+
+		  		createDataTable(service + "_rev", data, xtitle + " - " + ytitle );
+
+	  		});
+		};
+
+		$('#years_list').buttonset();
+		$('#user_list').buttonset();
+		fetch();
+	  	$('input:radio[name=year]').live('click', function() {
+	  		filter_result.year = $(this).val()
+	  		fetch();
+	  	});
+	  	
+	  	$('input:radio[name=by_consultant]').live('click', function() {
+	  		filter_result.consultant = $(this).val()
+	  		fetch();
+	  	});
+
+	});
+
+	//================================================
+
+	var won_vs_lost_vs_potential_charts = function(div, title, yaxis_title, months, data, max_num) {
+	  
+	  $('#'+div.replace('_chart', '_table')).find('.data_table_title').html(title);
+
+	  return new Highcharts.Chart({
+	    chart: {
+	      renderTo: div,
+	      type: "column",
+	      spacingBottom: 30
+	    },
+	    title: {
+	      text: title
+	    },
+	    xAxis: {
+	      categories: months,
+	      labels: {
+	        rotation: -45,
+	        align: "right",
+	        style: {
+	          fontSize: "10px",
+	          fontFamily: "Verdana, sans-serif"
+	        }
+	      }
+	    },
+	    yAxis: {
+	      min: 0,
+	      max: max_num,
+	      title: {
+	        text: yaxis_title
+	      }
+	    },
+	    plotOptions: {
+	      series: {
+	        cursor: "pointer",
+	        point: {
+	          events: {
+	            click: function() {
+	              return window.location = '/services#date=' + this.category + '&consultant=' + filter_result.consultant + '&status=' + this.series.options.composition.stat + '&service=' + this.series.options.composition.service;
+	            }
+	          }
+	        }
+	      }
+	    },
+	    tooltip: {
+	      formatter: function() {
+	        return "<b>" + this.x + "</b><br/>" + " ";
+	      }
+	    },
+	    series: data
+	  });
+	};
+
+
+
+	//================================================
+
+	//================================================
+	revenue_chart = function(div, title, yaxis_title, months, data) {
+	  $('#'+div.replace('_chart', '_table')).find('.data_table_title').html(title);
+	  return new Highcharts.Chart({
+	    chart: {
+	      renderTo: div,
+	      type: "areaspline"
+	    },
+	    title: {
+	      text: title
+	    },
+	    xAxis: {
+	      categories: months,
+	      labels: {
+	        rotation: -45,
+	        align: "right",
+	        style: {
+	          fontSize: "10px",
+	          fontFamily: "Verdana, sans-serif"
+	        }
+	      }
+	    },
+	    yAxis: {
+	      title: {
+	        text: yaxis_title
+	      }
+	    },
+	    tooltip: {
+	      formatter: function() {
+	        return Highcharts.numberFormat(this.y);
+	      }
+	    },
+	    series: data
+	  });
+	};
+	//================================================
+
+	

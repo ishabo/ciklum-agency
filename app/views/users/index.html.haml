@@ -1,0 +1,37 @@
+%h1 Listing users
+
+%table#users_list{:cellpadding => 2, :class => 'alternate'}
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Position
+      //%th Services Won
+      %th Has Bonus?
+      %th Is Manager
+      %th Is Employed
+
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= user.position ? user.position.name : ''
+        //%td= Service.count(:conditions => ['user_id = ? and success_status = ?', user.id, 5])
+        %td= user.has_bonus ? 'Yes' : 'Nope'
+        %td= user.is_manager ? 'Yes' : 'Nope'
+        %td= user.is_employed ? 'Yes' : 'Not anymore'
+        
+        %td{:style => 'text-align:right'}  
+          //= link_to 'Show', user
+          //\| 
+          = link_to 'Edit', edit_user_path(user)
+          - if user.has_bonus?
+            \| 
+            = link_to 'Bonuses',  "bonuses#consultant=#{user.id}" 
+            
+
+%br
+
+= link_to 'New User', new_user_path, :class => 'fancybutton'

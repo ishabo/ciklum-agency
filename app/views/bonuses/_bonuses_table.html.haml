@@ -1,0 +1,67 @@
+%table.shadow{:class => 'bonuses'}
+  %tr
+    %th Project
+    %th Reason
+    %th Value
+    %th{:width => "120px"} Service Status
+    - if bonus_status == 'due_bonus'
+      - if !is_user_boss
+        %th{:style => 'text-align:right; padding-right:10px;'} Claim
+    - if bonus_status == 'paid_bonus'
+      %th{:style => 'text-align:right; padding-right:10px;'}  Paid On
+    - if is_user_boss and bonus_status != 'paid_bonus'#can_manage_bonuses false
+      %th{:style => 'text-align:right; padding-right:10px;'}  Pay
+  - month_group = ''
+  - bonuses.each do |bonus|
+    - next if !bonus.service
+    - potential = (bonus_status == 'potential_bonus' && bonus.eligibility == 1 && bonus.claimed != true && bonus.paid != true)
+    - due = (bonus_status == 'due_bonus' && bonus.eligibility == 2 && bonus.paid != true) 
+    - paid = (bonus_status == 'paid_bonus' && bonus.paid == true ) 
+    - lost = (bonus_status == 'lost_bonus' && bonus.eligibility == 3)
+    - action = ((bonus.claimed != true and bonus.paid != true) or is_user_boss) ? 'edit' : 'no-action'
+    - next if due and is_user_boss and bonus.claimed == false
+    - if potential || due || paid || lost
+      %tr{ :class => classes[bonus.eligibility]}
+        - if paid || potential
+          - payment_month = potential ? "#{Date::MONTHNAMES[bonus.due_month]} #{bonus.created_at.strftime('%Y')}" : bonus.payment_date.strftime('%B %Y')
+          - if month_group != payment_month
+            - month_group = payment_month
+            %tr
+              %td{:colspan => '5'}
+            %tr
+              %th{:colspan => '5'}
+                = payment_month
+        %td{:id => bonus.id, :service_id => bonus.service_id, :start_date => bonus.service.start_date, :eligibility => bonus.eligibility}= "#{bonus.project.client}: #{bonus.project.name}"
+        %td= bonus.bonus_scheme.reason
+        %td{:class => "bonus_value", :bonus_id => bonus.id, :action => action, :size => 4}= bonus.value
+        %td{:style => 'text-align:center'}= image_tag("#{Service.statuses[bonus.service.success_status]}.png", :width => 30)
+        - if bonus_status == 'due_bonus'
+          - if !is_user_boss
+            - src = bonus.claimed ? 'undo.png' : '/assets/claim.png';
+            - alt_img = bonus.claimed ? '/assets/claim.png' : '/assets/undo.png';
+            - if bonus.eligibility == 2 && bonus.paid != true 
+              %td{:style => 'text-align:right; padding-right:10px;'} 
+                - if Time.new.strftime('%d').to_i > 22
+                  = "Claiming closed"
+                - else 
+                  = image_tag(src, :class => "claim_bonus", :bonus_id => bonus.id, :width => 20, :bool => bonus.claimed, :alt_img => alt_img)    
+
+            - else
+              %td{:style => 'text-align:right; padding-right:10px;'} 
+                = image_tag('potential_payment.png', :class => "potential_payment")
+
+            /*check_box_tag "claim_bonus", bonus.id, bonus.claimed, :disabled => bonus.eligibility == 2 && bonus.paid != true ?  false : true, :id => "claim_bonus_#{bonus.id}"*/
+        - if bonus_status == 'paid_bonus'
+          %td{:style => 'text-align:right; padding-right:10px;'} 
+            = bonus.payment_date.strftime('%B %d, %Y')
+        - if is_user_boss and bonus_status != 'paid_bonus'
+          - src = bonus.paid ? 'undo.png' : '/assets/pay.jpg';
+          - alt_img = bonus.paid ? '/assets/pay.jpg' : '/assets/undo.png';
+          - if bonus.eligibility == 2 || bonus.paid
+            %td{:style => 'text-align:right; padding-right:10px;'} 
+              = image_tag(src, :class => "pay_bonus", :bonus_id => bonus.id, :width => 20, :bool => bonus.paid, :alt_img => alt_img)
+          - else
+            %td{:style => 'text-align:right; padding-right:10px;'} 
+              = image_tag('potential_payment.png', :class => "potential_payment")
+
+          /*check_box_tag "pay_bonus", bonus.id, bonus.paid, :disabled => bonus.eligibility == 2 ?  false : true, :id => "pay_bonus_#{bonus.id}"*/

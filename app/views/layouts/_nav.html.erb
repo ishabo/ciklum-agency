@@ -1,0 +1,29 @@
+<% if current_user %>
+	<% @name = current_user.name.split(' ') %>
+	<ul>
+		<li><%= @name[0] %> Logged In - </li>
+	  <%
+	  @links = {
+	  				:home => ['Dashboard' ,'/home'], 
+	  				:users => ['People', users_path], 
+	  				:services => ['Activity', services_path],
+	  				:projects => ['Projects DB', projects_path],
+	  				:my_bonuses => ['MyBonus', bonuses_path],
+	  				:logout => ['Logout', logout_path] }
+
+	  if @current_user.is_admin == false
+	  	@links.delete(:users)
+	  end
+
+	  if @current_user.position.has_bonus == false and !is_user_boss
+	  	@links.delete(:my_bonuses)
+	  end
+	  
+	  if is_user_boss
+	  	#@links[:my_bonuses] = ['Bonuses', bonuses_path]
+	  end
+	  @links.each do |key, link| %>
+	  	<li <% if link.second == "/#{request.path_parameters[:controller]}" %> class='active' <% end %> ><%= link_to link.first , link.second %> </li>
+	  <% end %>
+	</ul>
+<% end %>

@@ -1,0 +1,15 @@
+%ul
+	%li
+		%a{:href => "#tabs1"} Due Bonuses
+	- if @user_id == current_user.id.to_s
+		%li 
+			%a{:href => "#tabs2"} Potential Bonuses
+	%li
+		%a{:href => "#tabs3"} Paid Bonuses
+#tabs1
+	= render 'bonuses_table', :bonuses => @bonuses, :classes => classes, :bonus_status => 'due_bonus'
+- if @user_id == current_user.id.to_s	
+	#tabs2
+		= render 'bonuses_table', :bonuses => @bonuses, :classes => classes, :bonus_status => 'potential_bonus'
+#tabs3
+	= render 'bonuses_table', :bonuses => @bonuses, :classes => classes, :bonus_status => 'paid_bonus'

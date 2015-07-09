@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @service.type
+%p
+  %b Project:
+  = @service.project_id
+%p
+  %b Description:
+  = @service.description
+%p
+  %b Spec sent:
+  = @service.spec_sent
+%p
+  %b Proposal sent:
+  = @service.proposal_sent
+%p
+  %b Start date:
+  = @service.start_date
+%p
+  %b Duration:
+  = @service.duration
+%p
+  %b Created at:
+  = @service.created_at
+
+= link_to 'Edit', edit_service_path(@service)
+\|
+= link_to 'Back', services_path

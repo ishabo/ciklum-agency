@@ -1,0 +1,39 @@
+%div 
+  %h1 List of Projects
+%div= link_to 'New Project', new_project_path, :class => 'fancybutton'
+%br
+%table#projects_list{:class => 'alternate'}
+  %thead
+    %tr
+      %th Name
+      %th Client
+      %th Project manager
+      %th Sales manager
+      %th Budget
+      %th Converted
+      %th Eng. Type
+      %th
+
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.name
+        %td= project.client
+        %td= project.project_manager
+        %td= project.sales_manager
+        %td= ApplicationHelper.comma_numbers(project.budget)
+        %td= Project.conversion_status[project.converted]
+        %td= Project.engagement_types[project.engagement_type]
+
+        %td 
+          =link_to 'Show', project
+          \|
+          =link_to 'Edit', edit_project_path(project)
+          \|
+          =link_to 'HUB', "http://hub.ciklum.net/project/#{project.hub_id}", {:target => '_blank', :class => 'icon-filter'}
+          //\|
+          //=link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Project', new_project_path, :class => 'fancybutton'

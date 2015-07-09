@@ -1,0 +1,20 @@
+%form.radio_filters
+	%div#user_list{:style => "float:left"}
+		= radio_button_tag 'by_consultant', 0, true
+		= label_tag "by_consultant_0", 'All'
+		- @consultants = {}
+		- User.all.each do |user|
+
+			- if user.is_employed and !user.is_manager and user.position != nil and user.position.abbr != 'CSM'
+				- @consultants[user.name] = user
+				- name = user.name.split(' ')
+				= radio_button_tag 'by_consultant', user.id, false, position: user.position.abbr
+				= label_tag "by_consultant_#{user.id}", name[1]
+	%div#years_list{:style => "float:right"}
+		- (2011..Date.today.year).each do |year|
+			= radio_button_tag 'year', year
+			= label_tag "year_#{year}", year
+
+	%div{:style => "font-size: 10px;"}
+		%input#toggle_chart_vs_table{:type => "checkbox", :checked => false}/
+		%label{:for => "toggle_chart_vs_table"} Toggle Chart vs Data Table

@@ -1,0 +1,33 @@
+%table{:class => 'alternate'}
+  = form_for @user do |f|
+    - if @user.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li= msg
+
+    %tr.field
+      %td= f.label :name
+      %td= f.text_field :name
+    %tr.field
+      %td= f.label :email
+      %td= f.text_field :email
+    %tr.field
+      %td= f.label :password
+      %td= f.text_field :password, :value => ''
+    %tr.field
+      %td= f.label :position_id
+      %td= f.select :position_id, Position.all.collect { |p| [p.name, p.id] }
+    %tr.field
+      %td= f.label :has_bonus
+      %td= f.check_box :has_bonus
+    %tr.field
+      %td= f.label :is_manager
+      %td= f.check_box :is_manager
+    %tr.field
+      %td= f.label :is_employed
+      %td= f.check_box :is_employed          
+    %tr.actions
+      %td
+      %td= f.submit 'Save'

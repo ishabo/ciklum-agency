@@ -1,0 +1,81 @@
+%h1 Services
+%div{:style => 'clear:both'}
+  %div{:style => 'float:left'}
+    = link_to 'New Service', '/service_project_form', :class => 'fancybox fancybutton', :form_id => 'project_form', :projects_update_url => '/projects', :services_update_url => '/services'
+  %div{:style => 'float:right'}
+    = link_to "Export", '/services.csv', :class => 'csv fancybutton'
+
+%br
+%br
+
+%div#services_filter
+  %div#user_list
+    = radio_button_tag 'consultant', 0, true
+    = label_tag "consultant_0", 'All'
+    - User.all.each do |user|
+      - if user.is_employed and !user.is_manager
+        - name = user.name.split(' ')
+        = radio_button_tag 'consultant', user.id, false, consultant_name: user.name
+        = label_tag "consultant_#{user.id}", name[1] 
+
+  %div#statuses_list.status_sample_colors
+    = radio_button_tag 'by_status', 0, true, :status_str => "All"
+    = label_tag "by_status_0", 'All'
+    - Service.statuses.each do |k,v|
+      = radio_button_tag 'by_status', v, false, :status_str => k
+      - img = image_tag("#{k}.png", :class => "img_sample_box")
+      = label_tag "by_status_#{v}", "#{img} #{k.capitalize}".html_safe
+
+%br
+%br
+
+%table#services_list{ :class=> 'alternate', "data-source" => services_url(format: "json") }
+  %thead
+    %tr
+      %th{:width=>'40%'} Project
+      %th{:width=>'10%'} Service
+      %th{:width=>'5%'} SDate
+      %th{:width=>'1%'} Dur
+      /*%th{:width=>'1%'} Week*/
+      %th{:width=>'5%'} Budget
+      %th{:width=>'30%'} People
+      //%th{:width=>'15%'} Deliveries
+      %th{:width=>'3%'} Status
+      %th{:width=>'20%'} Action
+  %tbody
+%br
+  
+%div{:style => "display:none"}
+  #exclamation_info
+    %b You can filter the services table using the following search keys:
+    %ul
+      %li pm:NAME = Finding services by Project Manager name
+      %li sm:NAME = Finding services by Sales Manager name 
+      %li project:NAME or p:NAME = Finding services by project name  
+      %li client:NAME or c:NAME = Finding services by client name 
+      %li sold_by:NAME or sb:NAME = Finding services by person who sold them
+      %li service:NAME or s:NAME = Finding services by service type: s:workshop, s:UX, s:PPOP ..etc.
+      %li date:DATE or d:DATE = Finding services by the month in which it occured: d:Feb 2013, d:Dec 4 2012, d:Jan ..etc.
+      %li Combination: you can combine any of the previous keys by separating with a semi-colon: d:Feb; s:workshop
+      %li Free text = Finding any service matching any of the proceeding points,
+      except that when you prepend a search key like pm: it guarantees specific result 
+
+:javascript
+  jQuery(function() {
+
+    $("#consultant_0").attr("checked","checked");
+    search_input = $("#services_list_filter").find('input[aria-controls]');
+    var placeholders = ['sold_by:#{@current_user.name}', 'pm:Eugene Labunskiy', 'sm:Martin Ahe', 'client:Nmotion', 'project:Kampster', 'service:workshop', 'date:Dec 2012', 'The Psychic Network'], i = 0
+    if (search_input.val() == '') {
+      setInterval(function(){
+      $("#services_list_filter").find('input[aria-controls]').attr('placeholder', placeholders[i]);
+        if (i++ == placeholders.length) i = 0;
+      }, 1500);
+    }
+    $("#services_list_filter").find('input[aria-controls]').parent().append('#{link_to image_tag("exclamation.png", :class => "exclamation"), "#exclamation_info", :id => "exclamation"}');
+
+    $("#services_list_filter").find('input[aria-controls]').parent().append('#{link_to image_tag("clear_field.png", :class => "clear_field"), "", :id => "clear_field"}');
+
+  });
+
+%script{:src => "http://jquery-datatables-row-grouping.googlecode.com/svn/trunk/media/js/jquery.dataTables.rowGrouping.js", :type => "text/javascript"}

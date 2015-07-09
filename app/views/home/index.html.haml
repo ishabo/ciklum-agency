@@ -1,0 +1,147 @@
+#filters
+	= render 'filters'
+#dashboard-tabs
+	%ul
+		%li
+			%a{href: "#tabs-1"} Dashboard
+		%li
+			%a{href: "#tabs-2"} Workshop Pipeline
+		%li
+			%a{href: "#tabs-3"} UX Pipline
+		%li
+			%a{href: "#tabs-4"} Revenue
+	#tabs-1
+		#agency_activities.dashboard-block.shadow{:style => "fill='#e3e3e3'"}
+			.title Activities
+			- last_month = ''
+			- this_month = ''
+			- future = ''
+			- user = ''
+			- all = ''
+			- @activities.each do |service|
+				- begin
+					- user = service.consultant.name
+					- month_year = service.start_date.strftime("%m %Y")
+					- if  @consultants[user] != nil
+						- if (DateTime.now - 1.month).strftime("%m %Y") == month_year
+							- @consultants[user]['last_month'] = ApplicationHelper.list_projects(service.project.name, @consultants[user]['last_month'])
+						- if month_year == (DateTime.now).strftime("%m %Y")
+							- @consultants[user]['this_month'] = ApplicationHelper.list_projects(service.project.name, @consultants[user]['this_month'])
+						- if month_year > (DateTime.now).strftime("%m %Y")
+							- @consultants[user]['future'] = ApplicationHelper.list_projects(service.project.name, @consultants[user]['future'])
+				- rescue
+
+			%table.alternate
+				%tr
+					%th Consultant
+					%th Last month
+					%th This month
+					%th Future
+					%th Availability
+				- @consultants.each do |name, consultant|
+					- if name == current_user.name
+						- avail_class = 'availability'
+						- default_text = 'Click to Update'
+					- else 
+						- avail_class = ''
+						- default_text = 'Needs to be updated'
+					%tr 
+						%td #{ApplicationHelper.filtr_by('consultant', name, consultant.id)} 
+						%td #{consultant['last_month'] ? consultant['last_month'] : 'No projects'}
+						%td #{consultant['this_month'] ? consultant['this_month'] : 'No projects'}
+						%td #{consultant['future'] ? consultant['future'] : 'No projects' }
+						%td{:action => 'edit', :user_id => consultant.id, :class => avail_class, :size => 5} #{consultant['avail_date'] ? consultant['avail_date'] : default_text}
+
+		#upcomming_work
+			- @upcomming_work.each do |service_type, services|
+				#upcomming_ws.dashboard-block.left-block.shadow
+					.title Scheduled #{service_type}
+					- if services == []
+						%center
+							%h1
+								No Scheduled Work for #{service_type}
+					- else 
+						%table{:style => "width:100%"}
+							%tr
+								%td <b>Project</b>
+								%td <b>Consultant</b>
+								%td <b>When</b>
+								%td <b>HUB</b>
+
+							
+								- services.each do |service|
+									%tr
+										- client_project_name = "#{service.project.client}: #{service.project.name} "
+										%td #{ApplicationHelper.filtr_by('project', client_project_name, service.project.name)}
+										%td #{ApplicationHelper.filtr_by('consultant', service.consultant.name, service.consultant.id)} 
+										- duration = service.duration
+										- if service.service_type.key_name == 'ws'
+											- unit = duration > 1 ? "days":"day"
+										- else
+											- unit = 'hours'
+										%td #{service.start_date.strftime("%e %b")} - #{duration} #{unit}
+										%td #{ApplicationHelper.form_hub_link(service.project.hub_id)}
+
+		
+		#conversion_rate.dashboard-block.right-block.shadow
+			.title Conversion Rate
+			%table.alternate
+				- @conversion_rate.each do |conv, val|
+					%tr
+						%td 
+							- if conv != :conversion_rate
+								= val[2].to_s
+							- else 
+								%b #{val[2].to_s}
+						%td 
+							- if conv != :conversion_rate
+								= ApplicationHelper.filtr_by('project_conversion', val[1].to_s, val[0].to_s)
+							- else 
+								%b 
+									= val[1].to_s
+	#tabs-2
+		.filters
+		%br
+
+		.charts
+			#ws_chart.shadow{:style => "height: 250px; "}
+			#ws_table.shadow{:style => "height: 300px; display: none; "}
+
+		%br
+
+	#tabs-3
+		.filters
+
+		%br
+		.charts
+			#ux_chart.shadow{:style => "height: 250px; "}
+			#ux_table.shadow{:style => "height: 300px;  display: none; "}
+
+
+	#tabs-4
+		.filters 
+
+		%br
+		.charts
+			#conversion_rev_chart.shadow{:style => "height: 350px;"}
+			#conversion_rev_table.shadow{:style => "height: 350px; display: none; "}
+
+		-#%br 
+		-#.charts
+		-#	#vas_rev_chart{:style => "width:90%; height: 250px; "}
+		-#	#vas_rev_table{:style => "width:90%; height: 250px;  display: none; "}
+
+		%br 
+		.charts
+			#ws_rev_chart.shadow{:style => "height: 350px; "}
+			#ws_rev_table.shadow{:style => "height: 350px; display: none; "}
+
+		%br 
+		.charts
+			#ux_rev_chart.shadow{:style => "height: 350px; "}
+			#ux_rev_table.shadow{:style => "height: 350px;  display: none; "}
+
+
+
+
+	

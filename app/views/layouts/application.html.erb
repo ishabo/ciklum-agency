@@ -1,0 +1,40 @@
+<% slogan = "Ciklum AGENCY - Project Office"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" href="http://cdn.ciklum.com/wp-content/uploads/2013/07/favicon2.ico">
+  <title><%= slogan %></title>
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<%= stylesheet_link_tag  "application", :media => "all" %>
+  <%= javascript_include_tag "application", params[:controller] %>
+  <%= stylesheet_link_tag jqueryui_css_google_cdn('ui-lightness', '1.10.3') %>
+	<%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="container">
+
+    <header class="header clearfix">
+      <div class="logo-slogan">
+        <%#= image_tag('ciklum.png')%>
+        <div class='logo'></div>
+        <div class='slogan'><%= slogan %></div>
+      </div>
+      <nav class="menu_main">
+       <%= render :partial => 'layouts/nav' %>
+      </nav>
+    </header>
+
+	<div class="info">
+		
+		<article class="article clearfix">
+			<%= yield %>
+		</article>
+    </div>
+    <footer class="footer clearfix">
+      <div class="copyright"><%= slogan %></div>
+      <nav class="menu_bottom">
+       <%= render :partial => 'layouts/nav' %>
+      </nav>
+    </footer>
+</body>
+</html>
