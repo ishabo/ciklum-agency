@@ -24,7 +24,7 @@
 						%br
 						\- #{bonus.value} USD for project: #{bonus.project.client} - #{bonus.project.name}. Reason: #{bonus.bonus_scheme.reason}
 						- i += 1 #Increasing count to check if the bonus is last in group and print total
-						- if total > 0 and @bonuses[i] == nil or group != @bonuses[i].user.name
+						- if total > 0 and @bonuses[i] == nil or group != bonus.user.name
 							%br
 							%b
 								Total #{total} USD

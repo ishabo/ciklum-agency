@@ -23,7 +23,7 @@
 
 :javascript
 
-	var history = [];
+	var hist = [];
 	var hash = hashToJson();
 
 	function getBonuses(id) {
@@ -43,19 +43,19 @@
 	}
 
 	function prepBonusPayment(bonus_id) {
-		history.push(bonus_id);
+		hist.push(bonus_id);
 		setBonusPaymentLink();
 	}
 
 	function undoBonusPayment(bonus_id) {
-		history.splice(history.indexOf(bonus_id), 1);
+		hist.splice(hist.indexOf(bonus_id), 1);
 		setBonusPaymentLink();
 	}
 
 	function setBonusPaymentLink(){
-		if ( history.length > 0) {
+		if ( hist.length > 0) {
 			$('#payment_cart').show();
-			$('#payment_cart').html('<a href="#" id="pay_bonuses" >Send ' + history.length + ' bonus payment requests</a>');
+			$('#payment_cart').html('<a href="#" id="pay_bonuses" >Send ' + hist.length + ' bonus payment requests</a>');
 		} else {
 			$('#payment_cart').hide();
 		}
@@ -83,7 +83,7 @@
 		});
 		
 		$("#pay_bonuses").live('click', function(){
-			var info = 'bonuses='+history.join(",");
+			var info = 'bonuses='+hist.join(",");
 			$.ajax({
 					url: '/prep_bonus_payments',
 					data: info,
@@ -154,7 +154,7 @@
 			if (action == 'pay') {
 			
 				if (data['paid'] == 'true') {
-					if (jQuery.inArray(data['id'], history) == -1) {
+					if (jQuery.inArray(data['id'], hist) == -1) {
 						prepBonusPayment(data['id']);
 					}
 				} else if (data['paid'] == 'false') {

@@ -10,13 +10,12 @@ class BonusesController < ApplicationController
     end
     @bonus_user = User.find(@user_id)
     name_split = @bonus_user.name.split(' ')
-    @bonus_owner = params[:id] ? "#{name_split[0]}'s bonuses" : "My Bonuses"
-
+    @bonus_owner = params[:id] ? "#{name_split[0]}'s bonuses" : "Bonuses"
     if request.xhr?
       if !@bonus_user.has_bonus
         render :text => "invalid"
       else
-        @bonuses = Bonus.find(:all, :conditions => {'user_id' => @user_id}, :order => 'payment_date DESC, CONCAT(due_month, YEAR(created_at)) ASC' )
+        @bonuses = Bonus.where('user_id' => @user_id).order('payment_date DESC, CONCAT(due_month, YEAR(created_at)) ASC' )
         render :template => 'bonuses/bonus_tabs.html.haml', :layout => false
       end
     end
