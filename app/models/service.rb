@@ -135,6 +135,9 @@ class Service < ActiveRecord::Base
 	# Get monthly projects method is used with different filters by the controller
 	# filters is a hash object serving the following params year, service_type, status, revenue = false, consultant = 0
 	def aggregate_projects_monthly_count (filters)
+		filters[:consultant] = nil if filters[:consultant].to_i == 0
+		filters[:service] = 'ws' if !filters[:service]
+
 		list = []
   	1.upto(12) { |month| list << get_projects_count_by_month(filters, month) }
 		list
@@ -169,7 +172,6 @@ class Service < ActiveRecord::Base
 	def aggregate_total_monthly_revenue()
 		
 		0.upto(11) {|mon| (@total_revenue[:grand_total] ||= 0) << @total_revenue[:completed][mon].to_i+@total_revenue[:lost][mon].to_i }
-		revenue
 
 	end
 
@@ -186,17 +188,17 @@ class Service < ActiveRecord::Base
 	end
 
 	def aggregate_completed_projects_monthly_count(filters)
-		filters[:status] =  self.is_conversion?(filters[:service_type]) ? Project.conversion_status[:won] : Service.statuses[:completed]#, :won, :completed
+		filters[:status] =  ApplicationHelper.is_conversion?(filters[:service_type]) ? Project.conversion_status[:won] : Service.statuses[:completed]#, :won, :completed
 		aggregate_projects_monthly_count filters #year, service_type, won_status, true, consultant
 	end
 
 	def aggregate_lost_projects_monthly_count(filters)
-		filters[:status] =  self.is_conversion?(filters[:service_type]) ? Project.conversion_status[:lost] : Service.statuses[:lost]#
+		filters[:status] =  ApplicationHelper.is_conversion?(filters[:service_type]) ? Project.conversion_status[:lost] : Service.statuses[:lost]#
 		aggregate_projects_monthly_count filters #year, service_type, won_status, true, consultant
 	end
 
 	def aggregate_potential_projects_monthly_count(filters)
-		filters[:status] =  self.is_conversion?(filters[:service_type]) ? Project.conversion_status[:pending] : Service.statuses[:potential]#
+		filters[:status] =  ApplicationHelper.is_conversion?(filters[:service_type]) ? Project.conversion_status[:pending] : Service.statuses[:potential]#
 		aggregate_projects_monthly_count filters #year, service_type, won_status, true, consultant
 	end
 

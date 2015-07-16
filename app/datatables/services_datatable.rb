@@ -22,19 +22,21 @@ class ServicesDatatable
       ]
       i = 0
       fetch_services(false, true).each do |service|
+        project = service.project
+
         i = i+1
         csv << 
         [ i,
-          service.project.hub_id,
-          service.project.name,
-          service.project.client,
-          service.project.budget,
-          Project.client_abc[service.project.abc],
-          Project.conversion_status[service.project.converted],
-          service.project.status_comment,
-          service.project.project_manager,
-          service.project.sales_manager,
-          Project.engagement_types[service.project.engagement_type],
+          project.hub_id,
+          project.name,
+          project.client,
+          project.budget,
+          Project.client_abc[project.abc],
+          Project.conversion_status[project.converted],
+          project.status_comment,
+          project.project_manager,
+          project.sales_manager,
+          Project.engagement_types[project.engagement_type],
           service.service_type.name,
           service.consultant.name,
           service.start_date.strftime("%b %e, %Y"),
@@ -56,11 +58,11 @@ private
       project_status_image = ''
       project_status_comment = ''
       service_status_comment = service.status_comment == '' || service.status_comment == nil ? '<i>No comment</i>' : service.status_comment
-
-      if service.project.engagement_type != Project.engagement_types.index(:service_only)
-        if service.project.converted == 1
+      project = service.project
+      if project.engagement_type != Project.engagement_types.index(:service_only)
+        if project.converted == 1
           img = 'won.png'
-        elsif service.project.converted == 2
+        elsif project.converted == 2
           img = 'lost.png'
         else
           img = 'potential.png'
@@ -72,7 +74,7 @@ private
       project_name = ("<div style='float:left; width: 85&#37;;'><b> %s</b>: %s <br /> <b>Budget:</b> %s</div><div style='float:right'>%s<div class='pop-up' id='project_status_comment_#{service.id}'><b>Client Category:</b> #{Project.client_abc[service.project.abc]}<br /><b>Project Comment</b>: #{project_status_comment}</div></div>" % 
                       [service.project.client, service.project.name, ApplicationHelper.comma_numbers(service.project.budget), project_status_image]).html_safe
       
-      service_status_image = image_tag("#{Service.statuses[service.success_status]}.png", {:class => 'show_comment', :popup_div => "service_status_comment_#{service.id}"})
+      service_status_image = image_tag("#{Service.statuses.invert[service.success_status]}.png", {:class => 'show_comment', :popup_div => "service_status_comment_#{service.id}", :alt => service.success_status})
 
       people = ('<b>Consultant:</b> %s, <b>Sold By:</b> %s<br />
           <b>PM:</b> %s, <b>SM:</b> %s<br />

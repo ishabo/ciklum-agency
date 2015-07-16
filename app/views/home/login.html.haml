@@ -3,14 +3,16 @@
   - if msg.is_a?(String)
     = content_tag :div, msg, :id => "flash_#{name}"
 
-= form_tag login_url do
-  %p
-    = label_tag  :email 
-    %br
-    = text_field_tag :email, params[:email]
+#login
+  = form_tag login_url do
 
-  %p
-    = label_tag :password
-    %br
-    = password_field_tag :password  
-  = submit_tag "Log in", :class => 'button'
+    %p
+      = label_tag  :email 
+      %br
+      = text_field_tag :email, params[:email]
+
+    %p
+      = label_tag :password
+      %br
+      = password_field_tag :password  
+    = submit_tag "Log in", :class => 'button'

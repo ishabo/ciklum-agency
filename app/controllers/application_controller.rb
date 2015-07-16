@@ -70,6 +70,10 @@ class ApplicationController < ActionController::Base
       c.position.name.match('Engagement') ? true : false
       #return true if c.position.name.match('Engagement') else false
     end
+
+    def is_ajax?
+      request.xhr?
+    end
 end
 
 

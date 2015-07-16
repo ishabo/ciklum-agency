@@ -68,8 +68,6 @@
         = f.label :is_paid
       %td
         = f.check_box :is_paid
-    %tr.actions
-      %td
-      %td
-        = f.submit 'Save', :id => 'service_submit'
-        = f.hidden_field :project_id
+
+  = f.submit 'Save', :id => 'service_submit', :class => 'button'
+  = f.hidden_field :project_id
