@@ -173,7 +173,7 @@ won_vs_lost_vs_potential_charts = (div, title, yaxis_title, months, data, max_nu
         point:
           events:
             click: ->
-              window.location = "/services#date=" + @category + "&consultant=" + filter_result.consultant + "&status=" + @series.options.composition.stat + "&service=" + @series.options.composition.service
+              window.location = "/services#date=" + @category + "&consultant=" + filter_result.consultant + "&status=" + @series.options.composition.stat + "&service_type=" + @series.options.composition.service
 
     tooltip:
       formatter: ->
@@ -245,18 +245,18 @@ fetch = (tab, what_to_display) ->
     fetch_revenue "conversion", what_to_display
   return
 
-fetch_won_vs_lost_vs_potential = (service, what_to_display) ->
+fetch_won_vs_lost_vs_potential = (service_type, what_to_display) ->
   $.get root_path,
     year: filter_result.year
-    service: service
+    service_type: service_type
     consultant: filter_result.consultant
   , (data) ->
     max_num = data.max
   	
-    if service is "ws"
+    if service_type is "ws"
       uf_service = "workshop|T&TR"
     else
-      uf_service = service
+      uf_service = service_type
     
     series_data = [
       name: "Completed :)"
@@ -266,7 +266,7 @@ fetch_won_vs_lost_vs_potential = (service, what_to_display) ->
       color: "#2DC444" #green
       composition:
         stat: "completed"
-        service: uf_service
+        service_type: uf_service
     ,
       name: "Lost :("
       data: data.lost
@@ -275,7 +275,7 @@ fetch_won_vs_lost_vs_potential = (service, what_to_display) ->
       color: "#D65C5C" #red
       composition:
         stat: "lost"
-        service: uf_service
+        service_type: uf_service
     ,
       name: "Potential :S"
       data: data.potential
@@ -284,7 +284,7 @@ fetch_won_vs_lost_vs_potential = (service, what_to_display) ->
       color: "#6278D1" #blue
       composition:
         stat: "potential"
-        service: uf_service
+        service_type: uf_service
     ,
       name: "Booked + In progress!!!"
       data: data.booked
@@ -293,33 +293,33 @@ fetch_won_vs_lost_vs_potential = (service, what_to_display) ->
       color: "#AA4BC9" #purple
       composition:
         stat: "booked"
-        service: uf_service
+        service_type: uf_service
     ]
     
     xtitle = undefined
     ytitle = undefined
-    if service is "ws"
+    if service_type is "ws"
       ytitle = "Number of Workshops"
       xtitle = "Workshops"
-    else if service is "vas"
+    else if service_type is "vas"
       ytitle = "Number of VAS"
       xtitle = "Value Added Services"
-    else if service is "ux"
+    else if service_type is "ux"
       ytitle = "Number of UX"
       xtitle = "UX-UI"
 
     if what_to_display is 'chart'
-      won_vs_lost_vs_potential_charts service + "_chart", xtitle, ytitle, data.get_months, series_data, max_num
+      won_vs_lost_vs_potential_charts service_type + "_chart", xtitle, ytitle, data.get_months, series_data, max_num
     else if what_to_display is 'table'
-      createDataTable service, data, xtitle + " - " + ytitle
+      createDataTable service_type, data, xtitle + " - " + ytitle
     return
   return
 
 
-fetch_revenue = (service, what_to_display) ->
+fetch_revenue = (service_type, what_to_display) ->
   $.get root_path,
     year: filter_result.year
-    service: service
+    service_type: service_type
     consultant: filter_result.consultant
     revenue: 1
   , (data) ->
@@ -333,22 +333,22 @@ fetch_revenue = (service, what_to_display) ->
       name: "Converted :)"
       data: data.completed
     ]
-    if service is "ws"
+    if service_type is "ws"
       ytitle = ""
       xtitle = "Workshop Revenue"
-    else if service is "vas"
+    else if service_type is "vas"
       ytitle = ""
       xtitle = "VAS Revenue"
-    else if service is "ux"
+    else if service_type is "ux"
       ytitle = ""
       xtitle = "UX Revenue"
-    else if service is "conversion"
+    else if service_type is "conversion"
       ytitle = "Revenue"
       xtitle = "Project Converted Revenue"
     if what_to_display is 'chart'
-      revenue_chart service + "_rev_chart", xtitle, ytitle, data.get_months, series_data
+      revenue_chart service_type + "_rev_chart", xtitle, ytitle, data.get_months, series_data
     else if what_to_display is 'table'
-      createDataTable service + "_rev", data, xtitle + " - " + ytitle
+      createDataTable service_type + "_rev", data, xtitle + " - " + ytitle
     return
   return
 

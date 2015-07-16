@@ -395,11 +395,11 @@ table.chart_data_table td {
   -khtml-border-radius: 10px;
   border-radius: 10px;
   display: inline-block;
-  left: 500px;
   padding: 9px 20px;
-  position: absolute;
   top: 67px;
   display:none;
+  width: 213px;
+  float: right;
 }
 
 #user_list {

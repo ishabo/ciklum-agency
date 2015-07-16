@@ -11,6 +11,7 @@ fnCreateSelect = (aData) ->
     r += "<option value=\"" + aData[i] + "\">" + aData[i] + "</option>"
     i++
   r + "</select>"
+  
 (($) ->
   $.fn.dataTableExt.oApi.fnGetColumnData = (oSettings, iColumn, bUnique, bFiltered, bIgnoreEmpty) ->
     return new Array()  if typeof iColumn is "undefined"
