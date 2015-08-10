@@ -25,5 +25,6 @@ The system serves the following functionality:
 **Scripting:** Coffeescript/JS with jQuery
 **Hosting:** Heroku
 
+
 ## Current status
 The system is longer in use at the moment because of radical changes of business strategy, organisation structure and service process, where the old bonus scheme logic was completely changed and therefore the built in bonus logic couldn't apply anymore. Hence, a huge upgrade was required, but that could not be done since I wasn't available as I had moved on in my carrier.
