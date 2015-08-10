@@ -17,13 +17,13 @@ The system serves the following functionality:
 **Dashboard:** An overview with charts of past, current and upcoming load for each consultant, a calculation of revenue from services and project conversion, conversion rate.
 
 ## Technology Stack:
-**Programming lang:** RubyOnRails
-**Database:** MySQL/SQLite
-**Behavioural Testing:** Rspec
-**Markup:** Haml/HTML
-**Styling:** Sass/CSS
-**Scripting:** Coffeescript/JS with jQuery
-**Hosting:** Heroku
+* **Programming lang:** RubyOnRails
+* **Database:** MySQL/SQLite
+* **Behavioural Testing:** Rspec
+* **Markup:** Haml/HTML
+* **Styling:** Sass/CSS
+* **Scripting:** Coffeescript/JS with jQuery
+* **Hosting:** Heroku
 
 
 ## Current status
