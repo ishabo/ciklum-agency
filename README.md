@@ -1,4 +1,4 @@
-# Ciklum Agency Project & Bonus management system
+# Ciklum Agency Project & Bonus Management Tool
 
 ##Overview
 The system was developed for an IT consultancy agency which was part of an IT provider called Ciklum. I worked for Ciklum as a Technical Business Consultant with a team of other consultants, UX designers and Business Analysts. Our work was focused on providing potential or existing clients of Ciklum with early consultancy on the software technology and architectural design, business intelligence and user experience before proceeding with development of their software. Managing those projects were tedious, especially that we had employee bonuses calculated based on specific success criteria. There was also a need to access the success rate, understanding past, current and upcoming work load for team coordination and many other factors.
