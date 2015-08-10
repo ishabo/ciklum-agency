@@ -8,15 +8,13 @@ The system was voluntarily developed by myself in RubyOnRails, as a proactive co
 ## Functionality
 The system serves the following functionality:
 
-**Users:**A user management functionality to manage consultants & managers with login credentials and permissions.
+**Users:**A user management functionality to manage consultants & managers with login credentials and permissions. The system was used by up to 20 people only for about 2.5 years
 
 **Services:** Records of services we have for each project, where a project is recorded once in the system, and at least one service is associated with it. The service can be: Workshop & Requirements Specification writing, UX-UI design or Technology & Team recommendation / proposal. The goal after successful consultancy services is to convert the project for development and pass it to the programmers and delivery team. Thus, each project had a conversion status (either potential, lost or converted), and each service had success status (potential, booked, in progress, lost, completed). 
 
 **Bonuses:** Each service is assigned to a consultant and a sales person (who can also be the consultant), and different bonus schemes are applied to different service types and bonus-illegible activity each time a service is created or updated. Each consultant who is illegible for a bonus could see his/her potential bonuses with ability to claim them, which notifies the manager who will go through each bonus to assess credibility and validity of the bonus claim and the integrity of data. Thus, mangers can login and see the list of bonuses for each consultant that has claimed bonus payment, and then approve and have the system aggregate the details and calculate the sum of all claimed bonuses to send the result as an email to the financial department. All that is done through the system.
 
 **Dashboard:** An overview with charts of past, current and upcoming load for each consultant, a calculation of revenue from services and project conversion, conversion rate.
-
-The system was hosted on Heroku, only used by up to 20 people, and is no longer in use at the moment because of staff changing, changes of business strategy of the company where bonus scheme logic was completely changed, and with team growth the agency was no longer one team but split into different departments, which require a huge upgrade to the system which I wasn't available to do since I had moved on.
 
 ## Technology Stack:
 **Programming lang:** RubyOnRails
@@ -26,3 +24,6 @@ The system was hosted on Heroku, only used by up to 20 people, and is no longer 
 **Styling:** Sass/CSS
 **Scripting:** Coffeescript/JS with jQuery
 **Hosting:** Heroku
+
+## Current status
+The system is longer in use at the moment because of radical changes of business strategy, organisation structure and service process, where the old bonus scheme logic was completely changed and therefore the built in bonus logic couldn't apply anymore. Hence, a huge upgrade was required, but that could not be done since I wasn't available as I had moved on in my carrier.
